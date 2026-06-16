@@ -13,6 +13,17 @@ export default defineConfig({
         target: 'https://docs.google.com',
         changeOrigin: true,
         secure: false, // Sometimes helpful for https targets
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.error('Proxy error occurred:', err);
+          });
+          proxy.on('proxyReq', (proxyReq, req, _res) => {
+            console.log('Proxying request:', req.method, req.url);
+          });
+          proxy.on('proxyRes', (proxyRes, req, _res) => {
+            console.log('Proxy received response:', proxyRes.statusCode, req.url);
+          });
+        },
         rewrite: (path) => {
           const query = path.split('?')[1] || '';
           console.log('Proxy Rewriting Path:', path, 'Query:', query);
