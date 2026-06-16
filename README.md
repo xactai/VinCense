@@ -71,4 +71,4 @@ export default defineConfig([
   },
 ])
 ```
-Thanks
+Thank you
